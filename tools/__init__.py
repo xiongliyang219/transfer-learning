@@ -1,1 +1,1 @@
-from tools.network import build_transfer_net
+from tools.model import build_transfer_net
