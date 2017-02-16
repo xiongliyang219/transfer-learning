@@ -9,4 +9,4 @@
 
 ## Examples
 
-- [Urban Tribes Classification]()
+- [Urban Tribes Classification](examples/urban-tribes.ipynb)
