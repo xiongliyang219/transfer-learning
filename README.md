@@ -1,13 +1,12 @@
 # Transfer Learning
 
-## conda Environment
+## Dependencies
 
-To reproduce the conda environment, do
-```bash
-conda env create -f environment.yml
-```
+- python >= 3.5
+- keras
+- numpy
+- tensorflow
 
-This will create a conda environment named `dl`, which could be activated by
-```bash
-source activate dl
-```
+## Examples
+
+- [Urban Tribes Classification]()
