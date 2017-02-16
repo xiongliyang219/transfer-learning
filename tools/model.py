@@ -10,7 +10,7 @@ def build_transfer_net(output_dim, transfer_layer_name='fc2'):
 
     # Attach a softmax layer to the transfer layer as the new output layer.
     transfer_layer = base_model.get_layer(transfer_layer_name)
-    output_layer = Dense(output_dim, activation='softmax', name='predictions')
+    output_layer = Dense(output_dim, activation='softmax', name='predictions',init='he_normal')
     predictions = output_layer(transfer_layer.output)
     model = Model(input=base_model.input, output=predictions)
 
