@@ -9,7 +9,7 @@ import numpy as np
 def load_data(path='data/pictures_all', validation_split=0.1, test_split=0.1,
               seed=233, images_per_category=None):
     # Gather and shuffle image paths.
-    repo_path = Path(__file__).parents[2]
+    repo_path = Path(__file__).resolve().parents[2]
     image_paths = list((repo_path / path).glob('*.jpg'))
     np.random.seed(seed)
     np.random.shuffle(image_paths)
