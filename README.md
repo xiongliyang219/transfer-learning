@@ -4,8 +4,8 @@
 
 - python >= 3.5
 - keras
-- numpy
 - matplotlib
+- numpy
 - tensorflow
 
 ## Examples
