@@ -1,7 +1,8 @@
 from pathlib import Path
 
 from keras.applications.vgg16 import preprocess_input
-from keras.preprocessing import image
+from keras.preprocessing.image import img_to_array
+from keras.preprocessing.image import load_img
 from keras.utils.np_utils import to_categorical
 import numpy as np
 
@@ -34,9 +35,9 @@ def load_data(path='data/pictures_all', validation_split=0.1, test_split=0.1,
             paths_train += paths_cat[tt_edge:]
 
     # Load images and labels from paths.
-    x_train, y_train = load_images(paths_train, categories)
-    x_val, y_val = load_images(paths_val, categories)
-    x_test, y_test = load_images(paths_test, categories)
+    x_train, y_train = load_images_and_labels(paths_train, categories)
+    x_val, y_val = load_images_and_labels(paths_val, categories)
+    x_test, y_test = load_images_and_labels(paths_test, categories)
 
     return (x_train, y_train), (x_val, y_val), (x_test, y_test)
 
@@ -45,14 +46,16 @@ def get_category(image_path):
     return image_path.name.split('_')[0]
 
 
-def load_images(paths, categories):
-    xs = []
-    ys = []
-    for path in paths:
-        x = image.load_img(path, target_size=(224, 224))
-        x = image.img_to_array(x)
-        xs += [x]
-        ys += [categories.index(get_category(path))]
-    xs = preprocess_input(np.stack(xs))
-    ys = to_categorical(ys, nb_classes=len(categories))
-    return xs, ys
+def load_images_and_labels(paths, categories):
+    return load_images(paths), load_labels(paths, categories)
+
+
+def load_images(paths):
+    images = [img_to_array(load_img(path, target_size=(224, 224)))
+              for path in paths]
+    return preprocess_input(np.stack(images))
+
+
+def load_labels(paths, categories):
+    labels = [categories.index(get_category(path)) for path in paths]
+    return to_categorical(labels, nb_classes=len(categories))
