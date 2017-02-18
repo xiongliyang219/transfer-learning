@@ -7,7 +7,7 @@ setup(
     packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'train=tools.command:train_command',
+            'transfer-learn=tools.command:transfer_learn_command',
         ],
     },
 )
