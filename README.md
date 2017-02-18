@@ -8,6 +8,24 @@
 - numpy
 - tensorflow
 
+## Installation
+
+```bash
+pip install -e .
+```
+
+## Usage
+
+```bash
+transfer-learn -l fc2 -s 2 -e 1 -o history.pickle
+```
+
+## Help
+
+```bash
+transfer-learn -h
+```
+
 ## Examples
 
 - [Urban Tribes Classification](examples/urban-tribes.ipynb)
