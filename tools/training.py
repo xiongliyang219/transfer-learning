@@ -1,5 +1,3 @@
-import pickle
-
 import h5py
 
 from tools import build_transfer_net
@@ -47,14 +45,6 @@ class Session(object):
             for key in self.history.keys():
                 self.history[key].extend(new_history[key])
 
-    @staticmethod
-    def _model_fpath(prefix):
-        return prefix + '.model.h5'
-
-    @staticmethod
-    def _history_fpath(prefix):
-        return prefix + '.history.json'
-
 
 def transfer_learn(layer_name, nb_sample, nb_epoch, output_file):
     """Transfer learning for image classification.
@@ -65,13 +55,19 @@ def transfer_learn(layer_name, nb_sample, nb_epoch, output_file):
         nb_epoch: Number of epochs to train.
         output_file: Name of the output file to pick history to.
     """
-    (x_train, y_train), (x_val, y_val), (x_test, y_test) = \
-        load_data(images_per_category=nb_sample)
+    # Build model
     model = build_transfer_net(output_dim=11,
                                transfer_layer_name=layer_name)
+
+    # Prepare data
+    (x_train, y_train), (x_val, y_val), (x_test, y_test) = \
+        load_data(images_per_category=nb_sample)
+
+    # Train
     model.compile(optimizer='adadelta', loss='categorical_crossentropy',
                   metrics=['accuracy'])
-    history = model.fit(x_train, y_train, batch_size=nb_sample,
-                        nb_epoch=nb_epoch, validation_data=(x_val, y_val))
-    with open(output_file, 'wb') as f:
-        pickle.dump(history.history, f)
+    session = Session(model)
+    session.train(x_train, y_train, batch_size=nb_sample, nb_epoch=nb_epoch,
+                  validation_data=(x_val, y_val))
+    session.dump(output_file)
+    return session
