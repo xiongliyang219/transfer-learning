@@ -1,6 +1,16 @@
 # Transfer Learning
 
-## Dependencies
+## Directory Structure
+
+- `data` stores data sets (not tracked in git).
+- `examples` contains several notebooks recording our early explorations.
+- `results` stores results (not tracked in git).
+- `scripts` stores scripts to be run to get results.
+- `tools` and `setup.py` constitute an installable Python package where organized codes live.
+
+## Reproduce Instructions
+
+To reproduce our results, first make sure the following dependencies are satisfied:
 
 - python >= 3.5
 - keras
@@ -8,24 +18,20 @@
 - numpy
 - tensorflow
 
-## Installation
+Then install the `tools` package through:
 
 ```bash
 pip install -e .
 ```
 
-## Usage
+Then `cd` into the `scripts` directory and do:
 
 ```bash
-transfer-learn -l fc2 -s 2 -e 1 -o output.hdf5
+# Train different models and store the resulting histories.
+# This will take a long time.
+python run.py
+
+# Make plots
+python plot_history.py
+python plot_filter.py
 ```
-
-## Help
-
-```bash
-transfer-learn -h
-```
-
-## Examples
-
-- [Urban Tribes Classification](examples/urban-tribes.ipynb)
