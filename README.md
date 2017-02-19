@@ -1,4 +1,4 @@
-# Transfer Learning
+# Transfer Learning on the Urban Tribes dataset
 
 ## Directory Structure
 
