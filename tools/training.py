@@ -18,8 +18,12 @@ class Session(object):
 
     def dump(self, path):
         W, b = self.model.layers[-1].get_weights()
-        self.dump_weights(W, b, path)
-        self.dump_history(self.history, path)
+        with h5py.File(path, 'w') as f:
+            f.create_dataset('W', data=W)
+            f.create_dataset('b', data=b)
+            group = f.create_group('history')
+            for k, v in self.history.items():
+                group.create_dataset(k, data=v)
 
     @classmethod
     def load(cls, model, path):
@@ -40,25 +44,12 @@ class Session(object):
                 self.history[key].extend(new_history[key])
 
     @staticmethod
-    def dump_history(history, path):
-        with h5py.File(path, 'w') as f:
-            group = f.create_group('history')
-            for k, v in history.items():
-                group.create_dataset(k, data=v)
-
-    @staticmethod
     def load_history(path):
         with h5py.File(path, 'r') as f:
             history = {}
             for k, v in f['history'].items():
                 history[k] = list(v)
         return history
-
-    @staticmethod
-    def dump_weights(W, b, path):
-        with h5py.File(path, 'w') as f:
-            f.create_dataset('W', data=W)
-            f.create_dataset('b', data=b)
 
     @staticmethod
     def load_weights(path):
