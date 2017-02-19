@@ -29,10 +29,10 @@ Then `cd` into the `scripts` directory and do:
 
 ```bash
 # Train different models and store the resulting histories.
-# This will take a long time.
+# This may take a long time.
 python run.py
 
-# Make plots
+# Make plots.
 python plot_history.py
 python plot_filter.py
 ```
