@@ -83,7 +83,7 @@ def transfer_learn(layer_name, nb_sample, nb_epoch, output_file):
         print('Resuming')
         session = Session.load(model, output_file)
         nb_epoch -= len(session.history['loss'])
-        if nb_epoch < 0:
+        if nb_epoch <= 0:
             return session
     else:
         print('Starting')
