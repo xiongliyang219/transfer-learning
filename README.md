@@ -17,7 +17,7 @@ pip install -e .
 ## Usage
 
 ```bash
-transfer-learn -l fc2 -s 2 -e 1 -o history.pickle
+transfer-learn -l fc2 -s 2 -e 1 -o output.hdf5
 ```
 
 ## Help
