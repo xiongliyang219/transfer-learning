@@ -13,6 +13,7 @@
 To reproduce our results, first make sure the following dependencies are satisfied:
 
 - python >= 3.5
+- h5py
 - keras
 - matplotlib
 - numpy
