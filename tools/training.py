@@ -74,7 +74,7 @@ def transfer_learn(layer_name, nb_sample, nb_epoch, output_file):
     Args:
         layer_name: Transfer layer name.
         nb_sample: Number of samples per categories.
-        nb_epoch: Number of epochs to train.
+        nb_epoch: Number of epochs to train in total.
         output_file: Name of the output file to pick history to.
     """
     # Build model
@@ -91,6 +91,9 @@ def transfer_learn(layer_name, nb_sample, nb_epoch, output_file):
     if os.path.exists(output_file):
         print('Resuming')
         session = Session.load(model, output_file)
+        nb_epoch -= len(session.history['loss'])
+        if nb_epoch < 0:
+            return session
     else:
         print('Starting')
         session = Session(model)
