@@ -1,0 +1,18 @@
+{
+  "nb_epoch": 10,
+  "samples": [
+    ["fc2", 2],
+    ["fc2", 4],
+    ["fc2", 8],
+    ["fc2", 16],
+    ["block5_pool", 8],
+    ["block4_pool", 8],
+    ["block3_pool", 8],
+    ["block2_pool", 8],
+    ["block1_pool", 8]
+  ],
+  "filters": [
+    ["../data/pictures_all/biker_group_pic00001.jpg", "block1_conv1"],
+    ["../data/pictures_all/biker_group_pic00001.jpg", "block5_conv3"]
+  ]
+}
