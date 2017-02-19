@@ -4,7 +4,7 @@
 
 - `data` stores data sets (not tracked in git).
 - `examples` contains several notebooks recording our early explorations.
-- `results` stores results (not tracked in git).
+- `results` stores results (tracked on [Google Drive](https://drive.google.com/open?id=0B1b89t9Bpw8TWXlod0VMNnlocGs)).
 - `scripts` stores scripts to be run to get results.
 - `tools` and `setup.py` constitute an installable Python package where organized codes live.
 
