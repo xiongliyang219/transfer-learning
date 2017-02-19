@@ -14,18 +14,16 @@ def plot_filter(image_path, layer_name, output_dir):
     model = Model(input=base_model.input,
                   output=base_model.get_layer(layer_name).output)
     layer_output = model.predict(x)
+    side = int(layer_output.shape[-1]**0.5)
 
-    fig = plt.figure(figsize=(12, 12))
+    fig = plt.figure()
 
     grid = AxesGrid(fig, 111,
-                    nrows_ncols=(8, 8),
+                    nrows_ncols=(side, side),
                     axes_pad=0.0,
-                    share_all=True,
-                    label_mode="L",
-                    cbar_location="top",
-                    cbar_mode="single")
+                    share_all=True)
 
-    for i in range(64):
+    for i in range(side**2):
         im = grid[i].imshow(layer_output[0, :, :, i], interpolation="nearest")
     grid.cbar_axes[0].colorbar(im)
 
