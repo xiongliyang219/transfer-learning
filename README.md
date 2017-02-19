@@ -36,3 +36,5 @@ python run.py
 python plot_history.py
 python plot_filter.py
 ```
+
+Parameters controlling theses scripts are stored in [`params.json`](scripts/params.json).
