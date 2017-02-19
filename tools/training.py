@@ -18,21 +18,13 @@ class Session(object):
 
     def dump(self, path):
         W, b = self.model.layers[-1].get_weights()
-        with h5py.File(path, 'w') as f:
-            f.create_dataset('W', data=W)
-            f.create_dataset('b', data=b)
-            group = f.create_group('history')
-            for k, v in self.history.items():
-                group.create_dataset(k, data=v)
+        self.dump_weights(W, b, path)
+        self.dump_history(self.history, path)
 
     @classmethod
     def load(cls, model, path):
-        with h5py.File(path, 'r') as f:
-            W = f['W'][:]
-            b = f['b'][:]
-            history = {}
-            for k, v in f['history'].items():
-                history[k] = list(v)
+        W, b = cls.load_weights(path)
+        history = cls.load_history(path)
         model.layers[-1].set_weights([W, b])
         return cls(model, history=history)
 
@@ -46,6 +38,34 @@ class Session(object):
         else:
             for key in self.history.keys():
                 self.history[key].extend(new_history[key])
+
+    @staticmethod
+    def dump_history(history, path):
+        with h5py.File(path, 'w') as f:
+            group = f.create_group('history')
+            for k, v in history.items():
+                group.create_dataset(k, data=v)
+
+    @staticmethod
+    def load_history(path):
+        with h5py.File(path, 'r') as f:
+            history = {}
+            for k, v in f['history'].items():
+                history[k] = list(v)
+        return history
+
+    @staticmethod
+    def dump_weights(W, b, path):
+        with h5py.File(path, 'w') as f:
+            f.create_dataset('W', data=W)
+            f.create_dataset('b', data=b)
+
+    @staticmethod
+    def load_weights(path):
+        with h5py.File(path, 'r') as f:
+            W = f['W'][:]
+            b = f['b'][:]
+        return W, b
 
 
 def transfer_learn(layer_name, nb_sample, nb_epoch, output_file):
