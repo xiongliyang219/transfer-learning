@@ -48,10 +48,12 @@ if __name__ == '__main__':
         plt.figure()
         for layer_name in ['block1_pool', 'block2_pool', 'block3_pool',
                            'block4_pool', 'block5_pool', 'fc2']:
-            print('Processing', layer_name, nb_sample, metric)
+            print(' Processing', layer_name, nb_sample, metric)
             output_file = '../results/urban_tribes-{}-{}.hdf5'.format(
                 layer_name, nb_sample)
             history = Session.load_history(output_file)
+            print(' val_' + metric,
+                  history['val_' + metric][params['nb_epoch'] - 1])
             p = plt.plot(history[metric][:params['nb_epoch']], '--',
                          label='{} train'.format(layer_name))
             plt.plot(history['val_' + metric][:params['nb_epoch']],
