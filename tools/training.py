@@ -1,3 +1,5 @@
+import os
+
 import h5py
 
 from tools import build_transfer_net
@@ -66,7 +68,12 @@ def transfer_learn(layer_name, nb_sample, nb_epoch, output_file):
     # Train
     model.compile(optimizer='adadelta', loss='categorical_crossentropy',
                   metrics=['accuracy'])
-    session = Session(model)
+    if os.path.exists(output_file):
+        print('Resuming')
+        session = Session.load(model, output_file)
+    else:
+        print('Starting')
+        session = Session(model)
     session.train(x_train, y_train, batch_size=nb_sample, nb_epoch=nb_epoch,
                   validation_data=(x_val, y_val))
     session.dump(output_file)
